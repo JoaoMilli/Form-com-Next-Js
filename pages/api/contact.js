@@ -5,8 +5,8 @@ export default function (req, res) {
         port: 465,
         host: "smtp.gmail.com",
         auth: {
-            user: 'joaomillidummy@gmail.com',
-            pass: process.env.password,
+            user: 'joaomillidummy@gmail.com', //Inserir Email da conta dummy que enviará os emails pra conta principal
+            pass: process.env.password, //Inserir senha da conta em um arquivo .env na root
         },
         secure: true,
     });
