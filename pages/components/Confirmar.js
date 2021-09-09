@@ -1,32 +1,33 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import {List,ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Box } from '@material-ui/system';
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
-export class Confirmar extends Component {
+export default function Confirmar (props) {
 
     
-    continue = e => {
+    const continuar = (e) => {
         e.preventDefault();
-        this.props.handleSubmit(e);
-        this.props.nextStep();
+        props.handleSubmit(e);
+        props.nextStep();
 
     }
-    back = e => {
+
+    const back = (e) => {
         e.preventDefault();
-        this.props.prevStep();
+        props.prevStep();
     }
 
-    render() {
-        const {values: {nome, email, cargo, cidade, bio}} = this.props;
-        return (
-            <MuiThemeProvider>
-                <React.Fragment>
-                    <AppBar title="Confirme seus dados"></AppBar>
+    const {values: {nome, email, cargo, cidade, bio}} = props;
+    return (
+        <MuiThemeProvider>
+            <React.Fragment>
+                <Box textAlign='center'>
+                    <h1 className='text-4xl font-bold dark:text-white mb-8'>Confirme seus dados</h1>
                     <List>
                         <ListItem
                             primaryText="Nome"
@@ -49,24 +50,23 @@ export class Confirmar extends Component {
                             secondaryText={bio}
                         />
                     </List>
-                    <br/>
-                    <RaisedButton
-                        label="Continuar"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                    />
-                    <br/>
                     <RaisedButton
                         label="Voltar"
                         primary={true}
                         style={styles.button}
-                        onClick={this.back}
+                        onClick={back}
                     />
-                </React.Fragment>
-            </MuiThemeProvider>
-        )
-    }
+                    <RaisedButton
+                        label="Continuar"
+                        primary={true}
+                        style={styles.button}
+                        onClick={continuar}
+                    />
+                </Box>
+            </React.Fragment>
+        </MuiThemeProvider>
+    )
+    
 }
 
 const styles = {
@@ -75,4 +75,3 @@ const styles = {
     }
 }
 
-export default Confirmar

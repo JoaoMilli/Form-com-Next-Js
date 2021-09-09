@@ -1,71 +1,93 @@
 
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import { MuiThemeProvider } from 'material-ui/styles';
+import { Box } from '@material-ui/system';
 
-export class DadosAdicionais extends Component {
 
-    continue = e => {
+export default function DadosAdicionais(props) {
+
+    const continuar = (e) => {
         e.preventDefault();
-        this.props.nextStep();
-    }
-    back = e => {
-        e.preventDefault();
-        this.props.prevStep();
+        props.nextStep();
     }
 
-    render() {
-        const {values, handleChange} = this.props;
-        return (
-            <MuiThemeProvider>
-                <React.Fragment>
-                    <AppBar title="Dados adicionais"></AppBar>
+    const back = (e) =>{
+        e.preventDefault();
+        props.prevStep();
+    }
+
+    const styles = {
+        button:{
+            margin: 15
+        }
+    }
+
+    const {values, handleChangeCargo, handleChangeCidade, handleChangeBio} = props;
+
+    return(
+        <MuiThemeProvider>
+            <React.Fragment>
+                <div className='pt-10'>
+                    <h1 className='text-4xl font-bold dark:text-white mb-8'>Inscrição</h1>
                     <TextField
-                        hintText='Insira o cargo pretendido'
+                        label='Insira o cargo pretendido'
                         floatingLabelText="Cargo"
-                        onChange={handleChange('cargo')}
+                        onChange={e => handleChangeCargo(e)}
                         defaultValue={values.cargo}
+                        fullWidth = {true}
+                        margin="normal"
+                        InputProps={{
+                            style: {
+                                color: "black"
+                            }
+                        }}
                     />
-                    <br/>
                     <TextField
-                        hintText='Insira sua cidade'
+                        label='Insira sua cidade'
                         floatingLabelText="Cidade"
-                        onChange={handleChange('cidade')}
+                        onChange={e => handleChangeCidade(e)}
                         defaultValue={values.cidade}
+                        fullWidth = {true}
+                        margin="normal"
+                        InputProps={{
+                            style: {
+                                color: "black"
+                            }
+                        }}
                     />
-                    <br/>
                     <TextField
-                        hintText='Fale sobre você'
+                        label='Fale sobre você'
                         floatingLabelText="Bio"
-                        onChange={handleChange('bio')}
+                        onChange={e => handleChangeBio(e)}
                         defaultValue={values.bio}
+                        fullWidth = {true}
+                        multiline = {true}
+                        margin="normal"
+                        InputProps={{
+                            style: {
+                                color: "black"
+                            }
+                        }}
                     />
-                    <br/>
-                    <RaisedButton
-                        label="Confirmar"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                    />
-                    <br/>
-                    <RaisedButton
-                        label="Voltar"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.back}
-                    />
-                </React.Fragment>
-            </MuiThemeProvider>
-        )
-    }
-}
 
-const styles = {
-    button:{
-        margin: 15
-    }
+                    <Box textAlign='center'>
+                        <RaisedButton variant='contained'
+                            label="Voltar"
+                            primary={true}
+                            style={styles.button}
+                            onClick={back}
+                        />
+                        <RaisedButton variant='contained'
+                            label="Continuar"
+                            primary={true}
+                            style={styles.button}
+                            onClick={continuar}
+                        />
+                    </Box>
+                </div>
+            </React.Fragment>
+        </MuiThemeProvider>
+    )
 }
-
-export default DadosAdicionais

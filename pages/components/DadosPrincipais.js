@@ -1,48 +1,64 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Box } from '@material-ui/system';
 
-export class DadosPrincipais extends Component {
+export default function DadosPrincipais(props) {
 
-    continue = e => {
+    const continuar = (e) => {
         e.preventDefault();
-        this.props.nextStep();
+        props.nextStep();
 
     }
 
-    render() {
-        const {values, handleChange} = this.props;
-        return (
-            <MuiThemeProvider>
-                <React.Fragment>
-                    <AppBar title="Dados principais"></AppBar>
+    const {values, handleChangeNome, handleChangeEmail} = props;
+
+    return (
+        <MuiThemeProvider>
+            <React.Fragment>
+                <div className='pt-10'>
+                    <h1 className='text-4xl font-bold dark:text-white mb-8'>Dados Principais</h1>
                     <TextField
-                        hintText='Insira seu nome'
+                        label='Insira seu nome'
                         floatingLabelText="Nome"
-                        onChange={handleChange('nome')}
+                        onChange={e => handleChangeNome(e)}
                         defaultValue={values.nome}
+                        fullWidth = {true}
+                        margin="normal"
+                        InputProps={{
+                            style: {
+                                color: "black"
+                            }
+                        }}
                     />
-                    <br/>
+                    
                     <TextField
-                        hintText='Insira seu Email'
+                        label='Insira seu Email'
                         floatingLabelText="Email"
-                        onChange={handleChange('email')}
+                        onChange={e => handleChangeEmail(e)}
                         defaultValue={values.email}
+                        fullWidth = {true}
+                        margin="normal"
+                        InputProps={{
+                            style: {
+                                color: "black"
+                            }
+                        }}
                     />
-                    <br/>
-                    <RaisedButton
-                        label="Continuar"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                    />
-                </React.Fragment>
-            </MuiThemeProvider>
-        )
-    }
+                    <Box textAlign='center'>
+                        <RaisedButton
+                            label="Continuar"
+                            primary={true}
+                            style={styles.button}
+                            onClick={continuar}
+                        />
+                    </Box>
+                </div>
+            </React.Fragment>
+        </MuiThemeProvider>
+    )
 }
 
 const styles = {
@@ -50,5 +66,3 @@ const styles = {
         margin: 15
     }
 }
-
-export default DadosPrincipais

@@ -1,47 +1,61 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import DadosPrincipais from './DadosPrincipais'
 import DadosAdicionais from './DadosAdicionais'
 import Confirmar from './Confirmar'
 import Sucesso from './Sucesso'
 
 
-export class UserForm extends Component {
-    state={
-        step: 1,
-        nome: '',
-        email:'',
-        cargo:'',
-        cidade:'',
-        bio:'',
+export default function UserForm () {
+
+
+    const [step, setStep] = useState(1);
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [cargo, setCargo] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [bio, setBio] = useState('');
+
+    const nextStep = () =>{
+        setStep(step + 1)
     }
 
-    nextStep = () =>{
-        const {step} = this.state;
-        this.setState({
-            step: step + 1
-        });
+    const prevStep = () =>{
+        setStep(step - 1)
     }
 
-    prevStep = () =>{
-        const {step} = this.state;
-        this.setState({
-            step: step - 1
-        });
+    const handleChangeNome = e =>{
+        setNome(e.target.value)
     }
 
-    handleChange = input => e =>{
-        this.setState({[input]: e.target.value})
+    const handleChangeEmail = e =>{
+        setEmail(e.target.value)
     }
 
-    resetChange = input => {
-        this.setState({[input]: ''})
+    const handleChangeCargo = e =>{
+        setCargo(e.target.value)
     }
 
-    handleSubmit = (e) => { 
+    const handleChangeCidade = e =>{
+        setCidade(e.target.value)
+    }
+
+    const handleChangeBio = e =>{
+        setBio(e.target.value)
+    }
+
+    const resetChange = () => {
+        setNome('')
+        setEmail('')
+        setCargo('')
+        setCidade('')
+        setBio('')
+    }
+
+    const handleSubmit = e => { 
         e.preventDefault()
         console.log('Sending')
 
-        const {nome, email, cargo, cidade, bio} = this.state;
+        //const {nome, email, cargo, cidade, bio} = nome, email, cargo, cidade, bio;
     
         let data = {
             nome,
@@ -62,54 +76,48 @@ export class UserForm extends Component {
           console.log('Response received')
           if (res.status === 200) {
             console.log('Response succeeded!')
-            this.resetChange('nome')
-            this.resetChange('email')
-            this.resetChange('cargo')
-            this.resetChange('cidade')
-            this.resetChange('bio')
+            resetChange()
           }
         })
     }
 
-    render() {
-        const {step, nome, email, cargo, cidade, bio} = this.state;
-        const values = {step, nome, email, cargo, cidade, bio}
+    const values = {step, nome, email, cargo, cidade, bio}
 
-        switch(step){
-            case 1:
-                return(
-                    <DadosPrincipais
-                        nextStep = {this.nextStep}
-                        handleChange={this.handleChange}
-                        values={values}
-                    />
-                )
-            case 2:
-                return(
-                    <DadosAdicionais
-                        nextStep = {this.nextStep}
-                        prevStep = {this.prevStep}
-                        handleChange={this.handleChange}
-                        values={values}
-                    />
-                )
-            case 3:
-                return(
-                    <Confirmar
-                        nextStep = {this.nextStep}
-                        prevStep = {this.prevStep}
-                        handleSubmit = {this.handleSubmit}
-                        resetChange={this.resetChange}
-                        values={values}
-                    />
-                )
-            case 4:
-                return(
-                    <Sucesso/>
+    switch(step){
+        case 1:
+            return(
+                <DadosPrincipais
+                    nextStep = {nextStep}
+                    handleChangeNome={handleChangeNome}
+                    handleChangeEmail={handleChangeEmail}
+                    values={values}
+                />
+            )
+        case 2:
+            return(
+                <DadosAdicionais
+                    nextStep = {nextStep}
+                    prevStep = {prevStep}
+                    handleChangeCargo={handleChangeCargo}
+                    handleChangeCidade={handleChangeCidade}
+                    handleChangeBio={handleChangeBio}
+                    values={values}
+                />
+            )
+        case 3:
+            return(
+                <Confirmar
+                    nextStep = {nextStep}
+                    prevStep = {prevStep}
+                    handleSubmit = {handleSubmit}
+                    resetChange={resetChange}
+                    values={values}
+                />
+            )
+        case 4:
+            return(
+                <Sucesso/>
 
-                )
-        }
+            )
     }
 }
-
-export default UserForm
