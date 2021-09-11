@@ -55,7 +55,6 @@ export default function UserForm () {
         e.preventDefault()
         console.log('Sending')
 
-        //const {nome, email, cargo, cidade, bio} = nome, email, cargo, cidade, bio;
     
         let data = {
             nome,
@@ -94,7 +93,7 @@ export default function UserForm () {
                 />
             )
         case 2:
-            return(
+            return(           
                 <DadosAdicionais
                     nextStep = {nextStep}
                     prevStep = {prevStep}
@@ -117,7 +116,6 @@ export default function UserForm () {
         case 4:
             return(
                 <Sucesso/>
-
             )
     }
 }

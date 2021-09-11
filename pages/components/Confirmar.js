@@ -1,11 +1,19 @@
 
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {List,ListItem} from 'material-ui/List';
-import RaisedButton from 'material-ui/RaisedButton';
-import { Box } from '@material-ui/system';
+import {List} from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { ListItemText } from '@material-ui/core';
+import { withStyles } from "@material-ui/core/styles";
 
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
+const CenteredListItemText = withStyles({
+    root: {
+      textAlign: "center",
+      marginTop: "20px",
+      marginRight:"80px"
+    }
+})(ListItemText);
 
 export default function Confirmar (props) {
 
@@ -24,47 +32,48 @@ export default function Confirmar (props) {
 
     const {values: {nome, email, cargo, cidade, bio}} = props;
     return (
-        <MuiThemeProvider>
-            <React.Fragment>
-                <Box textAlign='center'>
-                    <h1 className='text-4xl font-bold dark:text-white mb-8'>Confirme seus dados</h1>
-                    <List>
-                        <ListItem
-                            primaryText="Nome"
-                            secondaryText={nome}
-                        />
-                        <ListItem
-                            primaryText="Email"
-                            secondaryText={email}
-                        />
-                        <ListItem
-                            primaryText="Cargo pretendido"
-                            secondaryText={cargo}
-                        />
-                        <ListItem
-                            primaryText="Cidade"
-                            secondaryText={cidade}
-                        />
-                        <ListItem
-                            primaryText="Bio"
-                            secondaryText={bio}
-                        />
-                    </List>
-                    <RaisedButton
-                        label="Voltar"
-                        primary={true}
-                        style={styles.button}
-                        onClick={back}
+        <Grid container direction ="column" alignItems="center">   
+            <h1>Confirme seus dados</h1>
+                <List>
+                    <CenteredListItemText
+                        inset={true}
+                        primary="Nome"
+                        secondary={nome}
                     />
-                    <RaisedButton
-                        label="Continuar"
-                        primary={true}
-                        style={styles.button}
-                        onClick={continuar}
+                    <CenteredListItemText
+                        inset={true}
+                        primary="Email"
+                        secondary={email}
                     />
-                </Box>
-            </React.Fragment>
-        </MuiThemeProvider>
+                    <CenteredListItemText
+                        inset={true}
+                        primary="Cargo pretendido"
+                        secondary={cargo}
+                    />
+                    <CenteredListItemText
+                        inset={true}
+                        primary="Cidade"
+                        secondary={cidade}
+                    />
+                    <CenteredListItemText
+                        inset={true}
+                        primary="Bio"
+                        secondary={bio}
+                    />
+                </List>
+            <Grid container justifyContent = "center">      
+                <Button
+                    children="Voltar"
+                    style={styles.button}
+                    onClick={back}
+                />
+                <Button
+                    children="Continuar"
+                    style={styles.button}
+                    onClick={continuar}
+                />  
+            </Grid>
+        </Grid>
     )
     
 }
